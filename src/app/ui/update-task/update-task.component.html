@@ -1,0 +1,69 @@
+<br/>
+<div *ngIf="task">
+<form (submit)="UpdateTask()">
+    <div class="container-fluid">
+  
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label class="col-form-label font-weight-bold">Task:</label>
+        </div>
+        <div class="col-md-3 form-group">
+          <input type="text" class="form-control" required name="taskName" [(ngModel)]="task.taskName" />
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label class="col-form-label font-weight-bold">Priority:</label>
+        </div>
+        <div class="col-md-3 form-group">
+          <input type="range" class="custom-range" name="priority" [(ngModel)]="task.priority" min="0" max="30" step="1" tooltip="task.priority"
+          />
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label class="col-form-label font-weight-bold">Parent Task:</label>
+        </div>
+        <div class="col-md-3 form-group">
+          <select class="form-control" name="parentTask" [(ngModel)]="task.parentId">
+            <option value="">Select any task</option>
+            <option *ngFor="let pTask of tasks" [ngValue]="pTask.taskId">
+              {{pTask.taskName}}
+            </option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label class="col-form-label font-weight-bold">Start Date:</label>
+        </div>
+        <div class="col-md-3 form-group">
+          <input bsDatepicker [bsConfig]="bsConfig" required class="form-control" name="startDate"  [(ngModel)]="startDate" />
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-2 form-group">
+          <label class="col-form-label font-weight-bold">End Date:</label>
+        </div>
+        <div class="col-md-3 form-group">
+          <input bsDatepicker [bsConfig]="bsConfig" required class="form-control" name="endDate" [(ngModel)]="endDate" />
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-default">Update</button>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-default" (click)="Cancel()">Cancel</button>
+          </div>
+      </div>
+  
+    </div>
+  </form>
+</div>
