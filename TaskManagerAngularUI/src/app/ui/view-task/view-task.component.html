@@ -1,0 +1,141 @@
+<div class="container-fluid">
+  <br/>
+  <div class="row">
+    <div class="col-md-11">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Task:</label>
+            </div>
+            <div class="col-md-9 form-group">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="taskName" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Parent Task:</label>
+            </div>
+            <div class="col-md-9 form-group">
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="parentTaskName" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Priority From:</label>
+            </div>
+            <div class="col-md-3 form-group">
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="priorityFrom" min="0" max="30"/>
+            </div>
+            <div class="col-md-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Priority To:</label>
+            </div>
+            <div class="col-md-3 form-group">
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="priorityTo" min="1" max="30"/>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">Start Date:</label>
+            </div>
+            <div class="col-md-3 form-group">
+              <input bsDatepicker [bsConfig]="bsConfig" class="form-control form-control-sm" [(ngModel)]="startDate" />
+            </div>
+            <div class="col-md-3 form-group">
+              <label class="col-form-label col-form-label-sm font-weight-bold">End Date:</label>
+            </div>
+            <div class="col-md-3 form-group">
+              <input type="text" bsDatepicker [bsConfig]="bsConfig" class="form-control form-control-sm" [(ngModel)]="endDate" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr/>
+
+<div class="container-fluid">
+
+  <div *ngIf="tasks">
+    <div *ngFor="let task of filteredTasks">
+      
+      <div class="row font-weight-bold">
+        <div class="col-md-3">
+          Task
+        </div>
+        <div class="col-md-3">
+          Parent
+        </div>
+        <div class="col-md-1">
+          Priority
+        </div>
+        <div class="col-md-1">
+          Start
+        </div>
+        <div class="col-md-1">
+          End
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="card-deck">
+
+            <div class="card text-center bg-light">
+              <div class="card-body">
+                {{task.taskName}}
+              </div>
+            </div>
+
+            <div class="card text-center bg-light">
+              <div class="card-body">
+                {{task.parent?.taskName}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          {{task.priority}}
+        </div>
+        <div class="col-md-1">
+          {{task.startDate | date: "MM/dd/yyyy"}}
+        </div>
+        <div class="col-md-1">
+          {{task.endDate  | date: "MM/dd/yyyy"}}
+        </div>
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-4">
+              <button type="button" class="btn btn-default btn-sm btn-block" (click)="RouteToUpdateTask(task.taskId)" [disabled]="currentDate >= task.endDate"> Edit </button>
+            </div>
+            <div class="col-md-4">
+              <button type="button" id="endTask" class="btn btn-default btn-sm btn-block" (click)="EndTask(task)" [disabled]="currentDate >= task.endDate">End Task</button>
+            </div>
+            <div class="col-md-4">
+              <button type="button" id="deleteTask" class="btn btn-default btn-sm btn-block" (click)="DeleteTask(task.taskId)">Delete Task</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
+  
+  <div *ngIf="!tasks" class="text-center text-primary">
+    <h4>
+      Loading tasks! Please wait...
+    </h4>
+  </div>
+
+</div>
